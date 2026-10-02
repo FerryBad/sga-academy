@@ -123,23 +123,23 @@
         <nav class="flex space-x-2 border-b border-slate-800 mb-6 pb-2 overflow-x-auto">
             <button onclick="switchTab('learn')" id="tab-learn" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 bg-purple-600 text-white shadow-lg shadow-purple-600/30">
                 <i class="fa-solid fa-map-location-dot"></i>
-                <span>Learning Path</span>
+                <span data-i18n="learning_path">Learning Path</span>
             </button>
             <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-book-bookmark"></i>
-                <span>Grimoire Chart</span>
+                <span data-i18n="grimoire">Grimoire Chart</span>
             </button>
             <button onclick="switchTab('translator')" id="tab-translator" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-keyboard"></i>
-                <span>Live Translator</span>
+                <span data-i18n="translator">Live Translator</span>
             </button>
             <button onclick="switchTab('games')" id="tab-games" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-gamepad"></i>
-                <span>Learning Games</span>
+                <span data-i18n="games">Learning Games</span>
             </button>
             <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-trophy"></i>
-                <span>Profile</span>
+                <span data-i18n="profile">Profile</span>
             </button>
         </nav>
 
@@ -289,13 +289,13 @@
             <div class="mb-6 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <div class="text-[10px] uppercase font-bold tracking-widest text-purple-300 mb-1">Academy Profile</div>
+                        <div class="text-[10px] uppercase font-bold tracking-widest text-purple-300 mb-1" data-i18n="academy_profile">Academy Profile</div>
                         <h2 id="profile-rank" class="text-2xl font-extrabold text-amber-300">Rune Apprentice</h2>
-                        <p id="profile-next" class="text-xs text-slate-400 mt-1">Keep learning to unlock your next rank.</p>
+                        <p id="profile-next" class="text-xs text-slate-400 mt-1" data-i18n="keep_learning">Keep learning to unlock your next rank.</p>
                     </div>
                     <div class="text-right">
                         <div class="text-3xl font-black text-slate-100"><span id="profile-xp">0</span> XP</div>
-                        <div class="text-xs text-slate-500">Total academy experience</div>
+                        <div class="text-xs text-slate-500" data-i18n="total_xp">Total academy experience</div>
                     </div>
                 </div>
                 <div class="mt-5 h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -304,15 +304,35 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-purple-300" id="profile-streak">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Day Streak</div></div>
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-amber-300" id="profile-levels">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Levels</div></div>
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-emerald-300" id="profile-achievements">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Achievements</div></div>
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-cyan-300" id="profile-lives">5</div><div class="text-[10px] uppercase font-bold text-slate-500">Lives</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-purple-300" id="profile-streak">0</div><div class="text-[10px] uppercase font-bold text-slate-500" data-i18n="day_streak">Day Streak</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-amber-300" id="profile-levels">0</div><div class="text-[10px] uppercase font-bold text-slate-500" data-i18n="levels">Levels</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-emerald-300" id="profile-achievements">0</div><div class="text-[10px] uppercase font-bold text-slate-500" data-i18n="achievements">Achievements</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-cyan-300" id="profile-lives">5</div><div class="text-[10px] uppercase font-bold text-slate-500" data-i18n="lives">Lives</div></div>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 mb-6">
+                <div class="flex items-center justify-between gap-4 mb-4">
+                    <div>
+                        <div class="text-[10px] uppercase font-bold tracking-widest text-purple-300 mb-1" data-i18n="settings">Academy Settings</div>
+                        <h3 class="text-lg font-bold text-slate-100" data-i18n="base_language">Base Language</h3>
+                        <p class="text-xs text-slate-500" data-i18n="base_language_desc">Choose the language used for the Academy interface.</p>
+                    </div>
+                    <i class="fa-solid fa-language text-cyan-300 text-xl"></i>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <select id="base-language" onchange="setBaseLanguage(this.value)" class="w-full sm:w-auto bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 font-bold text-sm focus:outline-none focus:border-purple-500">
+                        <option value="en">English</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                    <span id="language-saved" class="text-xs text-emerald-400 font-semibold hidden" data-i18n="language_saved">Language saved</span>
+                </div>
             </div>
 
             <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
                 <div class="flex items-center justify-between mb-4">
-                    <div><h3 class="text-lg font-bold text-slate-100">Achievements</h3><p class="text-xs text-slate-500">Milestones earned across your academy journey.</p></div>
+                    <div><h3 class="text-lg font-bold text-slate-100">Achievements</h3><p class="text-xs text-slate-500" data-i18n="achievement_desc">Milestones earned across your academy journey.</p></div>
                     <i class="fa-solid fa-medal text-amber-400 text-xl"></i>
                 </div>
                 <div id="achievement-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
@@ -437,9 +457,7 @@
                 </div>
             </div>
 
-            <button id="btn-feedback-continue" onclick="closeFeedbackModal()" class="w-full py-3.5 rounded-2xl font-extrabold text-base bounce-hover shadow-lg">
-                CONTINUE
-            </button>
+            <button id="btn-feedback-continue" onclick="closeFeedbackModal()" class="w-full py-3.5 rounded-2xl font-extrabold text-base bounce-hover shadow-lg" data-i18n="continue">CONTINUE</button>
         </div>
     </div>
 
@@ -669,9 +687,73 @@
             }
         };
 
-        /* ==========================================================================
-           3. STATE PERSISTENCE
-           ========================================================================== */
+        /* ==========================================================================\n           BASE LANGUAGE / LOCALIZATION\n           ========================================================================== */
+        const UI_LANGUAGES = {
+            en: {
+                settings: 'Academy Settings', base_language: 'Base Language', base_language_desc: 'Choose the language used for the Academy interface.', language_saved: 'Language saved',
+                learning_path: 'Learning Path', grimoire: 'Grimoire Chart', translator: 'Live Translator', games: 'Learning Games', profile: 'Profile',
+                day_streak: 'Day Streak', levels: 'Levels', achievements: 'Achievements', lives: 'Lives', total_xp: 'Total academy experience',
+                academy_profile: 'Academy Profile', achievement_desc: 'Milestones earned across your academy journey.',
+                keep_learning: 'Keep learning to unlock your next rank.', daily_goal: 'Daily Goal Progress', continue: 'CONTINUE',
+                language_note: 'The learning vocabulary remains in English; this setting changes the Academy interface language.'
+            },
+            nl: {
+                settings: 'Academie-instellingen', base_language: 'Basistaal', base_language_desc: 'Kies de taal voor de interface van de Academy.', language_saved: 'Taal opgeslagen',
+                learning_path: 'Leerpad', grimoire: 'Grimoirekaart', translator: 'Live Vertaler', games: 'Leerspelletjes', profile: 'Profiel',
+                day_streak: 'Dagenreeks', levels: 'Levels', achievements: 'Prestaties', lives: 'Levens', total_xp: 'Totale Academy-ervaring',
+                academy_profile: 'Academieprofiel', achievement_desc: 'Mijlpalen die je tijdens je Academy-reis hebt behaald.',
+                keep_learning: 'Blijf leren om je volgende rang vrij te spelen.', daily_goal: 'Dagelijkse doelvoortgang', continue: 'DOORGAAN',
+                language_note: 'De leerwoorden blijven Engels; deze instelling verandert de taal van de Academy-interface.'
+            },
+            fr: {
+                settings: 'Paramètres de l’Academy', base_language: 'Langue de base', base_language_desc: 'Choisissez la langue utilisée pour l’interface de l’Academy.', language_saved: 'Langue enregistrée',
+                learning_path: 'Parcours', grimoire: 'Grimoire', translator: 'Traducteur en direct', games: 'Jeux éducatifs', profile: 'Profil',
+                day_streak: 'Série de jours', levels: 'Niveaux', achievements: 'Succès', lives: 'Vies', total_xp: 'Expérience totale',
+                academy_profile: 'Profil de l’Academy', achievement_desc: 'Jalons obtenus au cours de votre parcours.',
+                keep_learning: 'Continuez à apprendre pour débloquer le prochain rang.', daily_goal: 'Progression de l’objectif quotidien', continue: 'CONTINUER',
+                language_note: 'Le vocabulaire d’apprentissage reste en anglais ; ce réglage change la langue de l’interface.'
+            },
+            de: {
+                settings: 'Academy-Einstellungen', base_language: 'Basissprache', base_language_desc: 'Wähle die Sprache für die Academy-Oberfläche.', language_saved: 'Sprache gespeichert',
+                learning_path: 'Lernpfad', grimoire: 'Grimoire', translator: 'Live-Übersetzer', games: 'Lernspiele', profile: 'Profil',
+                day_streak: 'Tagesserie', levels: 'Level', achievements: 'Erfolge', lives: 'Leben', total_xp: 'Gesamte Academy-Erfahrung',
+                academy_profile: 'Academy-Profil', achievement_desc: 'Meilensteine auf deiner Academy-Reise.',
+                keep_learning: 'Lerne weiter, um deinen nächsten Rang freizuschalten.', daily_goal: 'Fortschritt des Tagesziels', continue: 'WEITER',
+                language_note: 'Die Lernwörter bleiben Englisch; diese Einstellung ändert die Sprache der Academy-Oberfläche.'
+            }
+        };
+
+        function getBaseLanguage() {
+            return localStorage.getItem('sga_base_language') || 'en';
+        }
+
+        function applyBaseLanguage() {
+            const lang = getBaseLanguage();
+            const dict = UI_LANGUAGES[lang] || UI_LANGUAGES.en;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key]) el.textContent = dict[key];
+            });
+            const select = document.getElementById('base-language');
+            if (select) select.value = lang;
+            const saved = document.getElementById('language-saved');
+            if (saved) saved.classList.add('hidden');
+        }
+
+        function setBaseLanguage(lang) {
+            if (!UI_LANGUAGES[lang]) return;
+            localStorage.setItem('sga_base_language', lang);
+            applyBaseLanguage();
+            const saved = document.getElementById('language-saved');
+            if (saved) {
+                saved.textContent = UI_LANGUAGES[lang].language_saved;
+                saved.classList.remove('hidden');
+                setTimeout(() => saved.classList.add('hidden'), 1800);
+            }
+        }
+
+        /* ==========================================================================\n           3. STATE PERSISTENCE\n           ========================================================================== */
         let state = {
             xp: 0,
             streak: 1,
@@ -689,6 +771,20 @@
                 if (saved) state = { ...state, ...JSON.parse(saved) };
             } catch(e) { console.error(e); }
             updateStatsUI();
+            syncNativeWidgetState();
+        }
+
+        function syncNativeWidgetState() {
+            try {
+                const plugin = window.Capacitor?.Plugins?.SGAWidgetBridge;
+                if (!plugin?.syncState) return;
+                plugin.syncState({
+                    xp: Number(state.xp || 0),
+                    streak: Number(state.streak || 0),
+                    dailyStreak: Number(state.dailyStreak || 0),
+                    completedLevels: Object.keys(state.completedLevels || {}).length
+                });
+            } catch(e) { console.debug('Native widget sync unavailable:', e); }
         }
 
         function saveState() {
@@ -696,6 +792,7 @@
                 localStorage.setItem('sga_duo_scaled_state', JSON.stringify(state));
             } catch(e) { console.error(e); }
             updateStatsUI();
+            syncNativeWidgetState();
         }
 
         function updateStatsUI() {
@@ -1777,7 +1874,8 @@
         }
 
         window.onload = function() {
-            loadState();
+            applyBaseLanguage();
+        loadState();
             renderChaptersMap();
             updateDailyChallengeUI();
             renderProfile();
