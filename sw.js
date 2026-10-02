@@ -1,10 +1,16 @@
-const CACHE_NAME = "sga-academy-v3";
+const CACHE_NAME = "sga-academy-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
+  "./icons/icon-32.png",
+  "./icons/icon-64.png",
+  "./icons/icon-96.png",
+  "./icons/icon-180.png",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./icons/icon-1024.png",
+  "./icons/apple-touch-icon.png"
 ];
 
 self.addEventListener("install", event => {
