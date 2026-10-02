@@ -1,14 +1,13 @@
 {
-  "name": "SGA Academy - Standard Galactic Alphabet",
+  "name": "SGA Academy",
   "short_name": "SGA Academy",
-  "description": "Learn and master the Standard Galactic Alphabet through lessons, quizzes, games, and daily challenges.",
-  "lang": "en",
+  "description": "Learn Standard Galactic Alphabet with lessons, games, XP and daily challenges.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
-  "background_color": "#0b0f19",
-  "theme_color": "#0b0f19",
   "icons": [
     {
       "src": "icons/icon-192.png",
