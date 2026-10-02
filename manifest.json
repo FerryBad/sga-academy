@@ -2,22 +2,22 @@
   "name": "SGA Academy",
   "short_name": "SGA Academy",
   "description": "Learn Standard Galactic Alphabet with lessons, games, XP and daily challenges.",
-  "id": "./",
-  "start_url": "./",
-  "scope": "./",
+  "id": "https://ferrybad.github.io/sga-academy/",
+  "start_url": "https://ferrybad.github.io/sga-academy/",
+  "scope": "https://ferrybad.github.io/sga-academy/",
   "display": "standalone",
   "background_color": "#1a0558",
   "theme_color": "#0b0f19",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "https://ferrybad.github.io/sga-academy/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "https://ferrybad.github.io/sga-academy/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
