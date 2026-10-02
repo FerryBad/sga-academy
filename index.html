@@ -137,6 +137,10 @@
                 <i class="fa-solid fa-gamepad"></i>
                 <span>Learning Games</span>
             </button>
+            <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                <i class="fa-solid fa-trophy"></i>
+                <span>Profile</span>
+            </button>
         </nav>
 
         <section id="view-learn" class="tab-content flex-grow flex flex-col">
@@ -281,6 +285,40 @@
         </section>
 
         <!-- Learning Games -->
+        <section id="view-profile" class="tab-content hidden flex-grow flex flex-col">
+            <div class="mb-6 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <div class="text-[10px] uppercase font-bold tracking-widest text-purple-300 mb-1">Academy Profile</div>
+                        <h2 id="profile-rank" class="text-2xl font-extrabold text-amber-300">Rune Apprentice</h2>
+                        <p id="profile-next" class="text-xs text-slate-400 mt-1">Keep learning to unlock your next rank.</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-black text-slate-100"><span id="profile-xp">0</span> XP</div>
+                        <div class="text-xs text-slate-500">Total academy experience</div>
+                    </div>
+                </div>
+                <div class="mt-5 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div id="profile-xp-fill" class="h-full bg-gradient-to-r from-purple-600 to-amber-400 rounded-full transition-all" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-purple-300" id="profile-streak">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Day Streak</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-amber-300" id="profile-levels">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Levels</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-emerald-300" id="profile-achievements">0</div><div class="text-[10px] uppercase font-bold text-slate-500">Achievements</div></div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center"><div class="text-2xl font-black text-cyan-300" id="profile-lives">5</div><div class="text-[10px] uppercase font-bold text-slate-500">Lives</div></div>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <div><h3 class="text-lg font-bold text-slate-100">Achievements</h3><p class="text-xs text-slate-500">Milestones earned across your academy journey.</p></div>
+                    <i class="fa-solid fa-medal text-amber-400 text-xl"></i>
+                </div>
+                <div id="achievement-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+        </section>
+
         <section id="view-games" class="tab-content hidden flex-grow flex flex-col">
             <div class="bg-gradient-to-r from-slate-900 via-purple-950/40 to-slate-900 border border-purple-500/30 rounded-2xl p-5 sm:p-6 mb-6 shadow-xl">
                 <div class="flex items-center space-x-4">
@@ -640,7 +678,9 @@
             lives: 5,
             completedLevels: {},
             stars: {},
-            dailyChallenge: { date: '', completed: false }
+            dailyChallenge: { date: '', completed: false },
+            dailyStreak: 0,
+            lastDailyCompleted: '',
         };
 
         function loadState() {
@@ -666,6 +706,56 @@
             const goalProgress = Math.min(100, (state.xp % 50) * 2);
             const fill = document.getElementById('daily-goal-fill');
             if (fill) fill.style.width = `${goalProgress}%`;
+            if (document.getElementById('profile-rank')) renderProfile();
+        }
+
+        const PROFILE_RANKS = [
+            [0, 'Rune Apprentice'], [100, 'Rune Scout'], [250, 'Rune Scholar'], [500, 'Galactic Scribe'],
+            [1000, 'Rune Master'], [2000, 'Galactic Sage'], [4000, 'SGA Grandmaster']
+        ];
+
+        function getProfileRank() {
+            let rank = PROFILE_RANKS[0];
+            for (const r of PROFILE_RANKS) if (state.xp >= r[0]) rank = r;
+            return rank;
+        }
+
+        function getAchievements() {
+            const levels = Object.keys(state.completedLevels || {}).length;
+            const dailyPerfect = !!state.dailyPerfect;
+            return [
+                ['first', 'First Rune', 'Complete your first level', levels >= 1, 'fa-scroll'],
+                ['xp100', 'Getting Started', 'Earn 100 XP', state.xp >= 100, 'fa-star'],
+                ['xp500', 'Rune Scholar', 'Earn 500 XP', state.xp >= 500, 'fa-book-open'],
+                ['xp1000', 'Rune Master', 'Earn 1,000 XP', state.xp >= 1000, 'fa-wand-magic-sparkles'],
+                ['levels5', 'Pathfinder', 'Complete 5 levels', levels >= 5, 'fa-map'],
+                ['levels10', 'Explorer', 'Complete 10 levels', levels >= 10, 'fa-compass'],
+                ['daily', 'Daily Discipline', 'Complete a Daily Rune Trial', !!(state.lastDailyCompleted), 'fa-calendar-check'],
+                ['perfect', 'Perfect Trial', 'Get 7/7 on a Daily Rune Trial', dailyPerfect, 'fa-crown'],
+                ['streak7', 'Weekly Streak', 'Reach a 7-day daily streak', state.dailyStreak >= 7, 'fa-fire']
+            ];
+        }
+
+        function renderProfile() {
+            const rank = getProfileRank();
+            const levels = Object.keys(state.completedLevels || {}).length;
+            const achievements = getAchievements();
+            const unlocked = achievements.filter(a => a[3]).length;
+            const next = PROFILE_RANKS.find(r => r[0] > state.xp);
+            const prevXP = rank[0];
+            const fill = next ? Math.min(100, ((state.xp - prevXP) / Math.max(1, next[0] - prevXP)) * 100) : 100;
+            const set = (id, value) => { const el = document.getElementById(id); if (el) el.innerText = value; };
+            set('profile-rank', rank[1]); set('profile-xp', state.xp); set('profile-streak', state.dailyStreak || 0);
+            set('profile-levels', levels); set('profile-achievements', `${unlocked}/${achievements.length}`); set('profile-lives', state.lives);
+            set('profile-next', next ? `${next[0] - state.xp} XP until ${next[1]}` : 'You have reached the highest academy rank.');
+            const bar = document.getElementById('profile-xp-fill'); if (bar) bar.style.width = `${fill}%`;
+            const grid = document.getElementById('achievement-grid');
+            if (grid) grid.innerHTML = achievements.map(a => `
+                <div class="flex items-center gap-3 p-3 rounded-xl border ${a[3] ? 'border-amber-500/40 bg-amber-500/5' : 'border-slate-800 bg-slate-950/40 opacity-50'}">
+                    <div class="w-10 h-10 rounded-xl ${a[3] ? 'bg-amber-500/15 text-amber-300' : 'bg-slate-800 text-slate-600'} flex items-center justify-center"><i class="fa-solid ${a[4]}"></i></div>
+                    <div class="min-w-0"><div class="text-sm font-bold ${a[3] ? 'text-slate-100' : 'text-slate-500'}">${a[1]}</div><div class="text-[11px] text-slate-500">${a[2]}</div></div>
+                    <i class="fa-solid ${a[3] ? 'fa-check text-emerald-400' : 'fa-lock text-slate-700'} ml-auto"></i>
+                </div>`).join('');
         }
 
         /* ==========================================================================
@@ -1389,8 +1479,15 @@
         function finishDailyChallenge() {
             const bonus = gameState.dailyCorrect === 7 ? 50 : 25;
             const earned = gameState.score + bonus;
+            const today = getDailyKey();
+            const yesterdayDate = new Date(); yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+            const yesterday = `${yesterdayDate.getFullYear()}-${String(yesterdayDate.getMonth()+1).padStart(2,'0')}-${String(yesterdayDate.getDate()).padStart(2,'0')}`;
+            if (state.lastDailyCompleted === yesterday) state.dailyStreak = (state.dailyStreak || 0) + 1;
+            else if (state.lastDailyCompleted !== today) state.dailyStreak = 1;
+            state.lastDailyCompleted = today;
+            state.dailyPerfect = gameState.dailyCorrect === 7 || state.dailyPerfect;
             state.xp += earned;
-            state.dailyChallenge = { date: getDailyKey(), completed: true };
+            state.dailyChallenge = { date: today, completed: true };
             saveState();
             updateDailyChallengeUI();
             document.getElementById('game-content').innerHTML = `
@@ -1676,12 +1773,14 @@
             if (tabId === 'learn') renderChaptersMap();
             if (tabId === 'dictionary') renderDictionary();
             if (tabId === 'translator') renderVirtualKeyboard();
+            if (tabId === 'profile') renderProfile();
         }
 
         window.onload = function() {
             loadState();
             renderChaptersMap();
             updateDailyChallengeUI();
+            renderProfile();
             document.getElementById('map-mascot-container').innerHTML = getMascotSVG('happy');
         };
     </script>
