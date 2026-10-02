@@ -99,8 +99,22 @@
                 </div>
             </div>
 
-            <!-- Gamification Stats Header -->
-            <div class="flex items-center space-x-3 sm:space-x-5 text-sm font-extrabold">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Language Selector -->
+                <label class="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1.5 rounded-full border border-purple-500/20 shadow-inner">
+                    <i class="fa-solid fa-language text-purple-300 text-xs"></i>
+                    <select id="language-select" onchange="changeLanguage(this.value)"
+                        class="bg-transparent text-slate-200 text-xs font-bold outline-none cursor-pointer max-w-[105px]">
+                        <option value="en">English</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="es">Español</option>
+                    </select>
+                </label>
+
+                <!-- Gamification Stats Header -->
+                <div class="flex items-center space-x-3 sm:space-x-5 text-sm font-extrabold">
                 <!-- Streak -->
                 <div class="flex items-center space-x-1.5 text-amber-400 bg-slate-800/80 px-3 py-1.5 rounded-full border border-amber-500/20 shadow-inner">
                     <i class="fa-solid fa-fire text-amber-500"></i>
@@ -126,23 +140,23 @@
         <nav class="flex space-x-2 border-b border-slate-800 mb-6 pb-2 overflow-x-auto">
             <button onclick="switchTab('learn')" id="tab-learn" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 bg-purple-600 text-white shadow-lg shadow-purple-600/30">
                 <i class="fa-solid fa-map-location-dot"></i>
-                <span>Learning Path</span>
+                <span data-i18n="learningPath">Learning Path</span>
             </button>
             <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-book-bookmark"></i>
-                <span>Grimoire Chart</span>
+                <span data-i18n="grimoireChart">Grimoire Chart</span>
             </button>
             <button onclick="switchTab('translator')" id="tab-translator" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-keyboard"></i>
-                <span>Live Translator</span>
+                <span data-i18n="liveTranslator">Live Translator</span>
             </button>
             <button onclick="switchTab('games')" id="tab-games" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-gamepad"></i>
-                <span>Learning Games</span>
+                <span data-i18n="learningGames">Learning Games</span>
             </button>
             <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
                 <i class="fa-solid fa-trophy"></i>
-                <span>Profile</span>
+                <span data-i18n="profile">Profile</span>
             </button>
         </nav>
 
@@ -1779,7 +1793,83 @@
             if (tabId === 'profile') renderProfile();
         }
 
+
+        /* ==========================================================================
+           LANGUAGE SELECTOR
+           ========================================================================== */
+        const LANGUAGE_PACKS = {
+            en: {
+                learningPath: "Learning Path",
+                grimoireChart: "Grimoire Chart",
+                liveTranslator: "Live Translator",
+                learningGames: "Learning Games",
+                profile: "Profile"
+            },
+            nl: {
+                learningPath: "Leerpad",
+                grimoireChart: "Grimoire",
+                liveTranslator: "Live Vertaler",
+                learningGames: "Leerspellen",
+                profile: "Profiel"
+            },
+            fr: {
+                learningPath: "Parcours",
+                grimoireChart: "Grimoire",
+                liveTranslator: "Traducteur",
+                learningGames: "Jeux d’apprentissage",
+                profile: "Profil"
+            },
+            de: {
+                learningPath: "Lernpfad",
+                grimoireChart: "Grimoire",
+                liveTranslator: "Live-Übersetzer",
+                learningGames: "Lernspiele",
+                profile: "Profil"
+            },
+            es: {
+                learningPath: "Ruta de aprendizaje",
+                grimoireChart: "Grimorio",
+                liveTranslator: "Traductor en vivo",
+                learningGames: "Juegos de aprendizaje",
+                profile: "Perfil"
+            }
+        };
+
+        function applyLanguage(lang) {
+            const pack = LANGUAGE_PACKS[lang] || LANGUAGE_PACKS.en;
+            document.documentElement.lang = lang === 'nl' ? 'nl' :
+                lang === 'fr' ? 'fr' :
+                lang === 'de' ? 'de' :
+                lang === 'es' ? 'es' : 'en';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (pack[key]) el.textContent = pack[key];
+            });
+
+            const selector = document.getElementById('language-select');
+            if (selector) selector.value = lang;
+
+            try {
+                localStorage.setItem('sga_academy_language', lang);
+            } catch (e) {}
+        }
+
+        function changeLanguage(lang) {
+            applyLanguage(lang);
+        }
+
+        function loadLanguage() {
+            let lang = 'en';
+            try {
+                lang = localStorage.getItem('sga_academy_language') || 'en';
+            } catch (e) {}
+            if (!LANGUAGE_PACKS[lang]) lang = 'en';
+            applyLanguage(lang);
+        }
+
         window.onload = function() {
+            loadLanguage();
             loadState();
             renderChaptersMap();
             updateDailyChallengeUI();
