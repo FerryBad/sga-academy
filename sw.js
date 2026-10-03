@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sga-academy-v5-language';;
+const CACHE_NAME = 'sga-academy-v6-tier-recap';;
 const APP_SHELL = [
   "./", "./index.html", "./manifest.json", "./favicon.png",
   "./icons/icon-32.png", "./icons/icon-48.png", "./icons/icon-64.png", "./icons/icon-96.png",

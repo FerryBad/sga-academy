@@ -1138,6 +1138,25 @@
                 AudioFX.playWrong();
                 state.lives = Math.max(0, state.lives - 1);
                 saveState();
+
+                // Adaptive practice: every mistake adds a fresh retry for the
+                // same rune/word at the end of this session. Retries use a
+                // different question type when possible, so the learner must
+                // actually recall the rune rather than memorize one prompt.
+                // Cap retries at 3 per item so one difficult rune cannot make
+                // the quiz grow forever.
+                const retryCount = q.retryCount || 0;
+                if (retryCount < 3) {
+                    const retryQuestion = generateRandomLessonQuestions(
+                        { pool: [q.correctWord] },
+                        1
+                    )[0];
+                    retryQuestion.isRetry = true;
+                    retryQuestion.retryCount = retryCount + 1;
+                    retryQuestion.retryFor = q.correctWord;
+                    currentQuiz.questions.push(retryQuestion);
+                }
+
                 showFeedbackModal(false, userAns, q.correctWord, q.correctSGA);
             }
         }
